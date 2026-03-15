@@ -1,126 +1,112 @@
-'use client';
-
 import { useState, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
-import { Link } from '@/lib/navigation';
-import LanguageSwitcher from './LanguageSwitcher';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { motion, AnimatePresence } from 'framer-motion';
+import { NAV_LINKS } from '@/lib/constants';
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
-
-const Navbar = () => {
-  const t = useTranslations('nav');
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const navLinks = [
-    { href: '/apartments', label: t('apartments') },
-    { href: '/facilities', label: t('facilities') },
-    { href: '/smart-hotel', label: t('smartHotel') },
-    { href: '/location', label: t('location') },
-    { href: '/digital-nomads', label: t('digitalNomads') },
-    { href: '/blog', label: t('blog') },
-    { href: '/about', label: t('about') },
-    { href: '/contact', label: t('contact') },
-  ];
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
 
   return (
     <nav
-      className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        isScrolled
-          ? 'bg-white shadow-md'
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled || mobileOpen
+          ? 'bg-navy-900/80 backdrop-blur-xl border-b border-navy-700/30 shadow-[0_4px_30px_rgba(0,0,0,0.3)]'
           : 'bg-transparent'
-      )}
+      }`}
     >
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <Link href="/" className="flex items-center">
-            <img
-              src={isScrolled ? `${basePath}/logo-dark.png` : `${basePath}/logo-white.png`}
-              alt="Bastet"
-              className="h-10 md:h-12 w-auto transition-opacity duration-200"
-            />
-          </Link>
+      <div className="container-main flex items-center justify-between h-16 md:h-20">
+        <Link to="/" className="flex items-center gap-2 group">
+          <span className="text-xl font-bold text-white">
+            Hospit<span className="text-cyan-400 group-hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.5)] transition-all">AI</span>
+          </span>
+        </Link>
 
-          {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  'btn-nav text-sm font-medium transition-colors duration-200',
-                  isScrolled ? 'text-bastet-charcoal hover:text-bastet-gold' : 'text-white hover:text-bastet-gold'
-                )}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Right Side: Language Switcher + Book Now */}
-          <div className="flex items-center gap-4 md:gap-6">
-            <LanguageSwitcher />
-
-            <Link href="/book" className="btn-primary text-sm md:text-base py-2 md:py-3 px-4 md:px-6">
-              {t('bookNow')}
-            </Link>
-
-            {/* Mobile Menu Toggle */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={cn(
-                'lg:hidden p-2 rounded-lg transition-colors duration-200',
-                isScrolled
-                  ? 'text-bastet-charcoal hover:bg-bastet-sand'
-                  : 'text-white hover:bg-white/10'
-              )}
-              aria-label="Toggle menu"
+        {/* Desktop */}
+        <div className="hidden md:flex items-center gap-8">
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              to={link.href}
+              className={`relative text-sm font-medium transition-colors ${
+                location.pathname === link.href
+                  ? 'text-cyan-400'
+                  : 'text-slate-300 hover:text-white'
+              }`}
             >
-              {isMobileMenuOpen ? (
-                <X size={24} />
-              ) : (
-                <Menu size={24} />
+              {link.label}
+              {location.pathname === link.href && (
+                <motion.div
+                  layoutId="nav-indicator"
+                  className="absolute -bottom-1 left-0 right-0 h-px bg-cyan-400"
+                  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                />
               )}
-            </button>
-          </div>
+            </Link>
+          ))}
+          <Link
+            to="/contact"
+            className="text-sm font-medium px-5 py-2 rounded-lg bg-cyan-400/10 text-cyan-400 border border-cyan-400/20 hover:bg-cyan-400/20 hover:border-cyan-400/40 hover:shadow-[0_0_20px_rgba(34,211,238,0.1)] transition-all duration-300"
+          >
+            Get in touch
+          </Link>
         </div>
 
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="lg:hidden absolute top-full left-0 right-0 bg-white shadow-lg animate-slide-down">
-            <div className="flex flex-col px-4 py-4 gap-2">
-              {navLinks.map((link) => (
+        {/* Mobile toggle */}
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="md:hidden text-slate-300 hover:text-white p-2"
+          aria-label="Toggle menu"
+        >
+          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+        </button>
+      </div>
+
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-navy-900/95 backdrop-blur-xl border-t border-navy-700/30 overflow-hidden"
+          >
+            <div className="container-main flex flex-col gap-4 py-6">
+              {NAV_LINKS.map((link) => (
                 <Link
                   key={link.href}
-                  href={link.href}
-                  className="btn-nav text-bastet-charcoal py-2 px-4 rounded-lg hover:bg-bastet-sand transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  to={link.href}
+                  className={`text-base font-medium py-2 ${
+                    location.pathname === link.href
+                      ? 'text-cyan-400'
+                      : 'text-slate-300'
+                  }`}
                 >
                   {link.label}
                 </Link>
               ))}
-              <Link href="/book" className="btn-primary w-full mt-4 text-center block">
-                {t('bookNow')}
+              <Link
+                to="/contact"
+                className="text-base font-medium py-2 text-cyan-400"
+              >
+                Get in touch
               </Link>
             </div>
-          </div>
+          </motion.div>
         )}
-      </div>
+      </AnimatePresence>
     </nav>
   );
-};
-
-export default Navbar;
+}

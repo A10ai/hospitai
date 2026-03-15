@@ -1,28 +1,31 @@
-import { cn } from '@/lib/utils';
-
-type Props = {
-  title: string;
-  subtitle?: string;
+interface SectionHeaderProps {
+  label: string;
+  heading: string;
+  description?: string;
   centered?: boolean;
-  light?: boolean;
-};
+}
 
-export default function SectionHeader({ title, subtitle, centered = true, light = false }: Props) {
+export default function SectionHeader({
+  label,
+  heading,
+  description,
+  centered = false,
+}: SectionHeaderProps) {
   return (
-    <div className={cn('space-y-4 md:space-y-6', centered && 'text-center')}>
-      <h2 className={cn(
-        'text-display-md md:text-display-lg font-display font-bold',
-        light ? 'text-bastet-cream' : 'text-bastet-navy'
-      )}>
-        {title}
+    <div className={centered ? 'text-center' : ''}>
+      <span className="text-cyan-400 text-sm font-medium tracking-wider uppercase">
+        {label}
+      </span>
+      <h2 className="text-3xl md:text-4xl font-semibold text-white mt-2">
+        {heading}
       </h2>
-      {subtitle && (
-        <p className={cn(
-          'text-lg md:text-xl max-w-2xl leading-relaxed',
-          centered && 'mx-auto',
-          light ? 'text-bastet-sand' : 'text-bastet-charcoal-light'
-        )}>
-          {subtitle}
+      {description && (
+        <p
+          className={`text-slate-400 mt-4 max-w-2xl text-lg leading-relaxed ${
+            centered ? 'mx-auto' : ''
+          }`}
+        >
+          {description}
         </p>
       )}
     </div>
