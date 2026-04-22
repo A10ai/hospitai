@@ -95,7 +95,7 @@ export default function HeroSection() {
             {[
               { value: '187K', label: 'Hotels globally' },
               { value: '$220B', label: 'Market by 2030' },
-              { value: '270', label: 'Unit pilot live' },
+              { value: '270', label: 'Unit pilot in build' },
             ].map((stat) => (
               <div
                 key={stat.label}

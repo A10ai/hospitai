@@ -16,7 +16,7 @@ export default function ContactForm() {
 
     const subject = encodeURIComponent(`Contact from ${name} — ${org}`);
     const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nOrganisation: ${org}\n\n${message}`);
-    window.location.href = `mailto:hello@hospitai.co.uk?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:hello@hospitai.uk?subject=${subject}&body=${body}`;
     setSubmitted(true);
   };
 
@@ -38,7 +38,7 @@ export default function ContactForm() {
             </p>
             <div className="mt-8 p-4 rounded-xl bg-navy-800/30 border border-navy-700/50 backdrop-blur-sm inline-block">
               <div className="text-slate-500 text-sm">Email</div>
-              <div className="text-white mt-1 font-mono text-sm">hello@hospitai.co.uk</div>
+              <div className="text-white mt-1 font-mono text-sm">hello@hospitai.uk</div>
             </div>
           </ScrollReveal>
 

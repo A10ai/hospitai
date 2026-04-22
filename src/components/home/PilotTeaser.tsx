@@ -7,7 +7,7 @@ import ScrollReveal from '@/components/shared/ScrollReveal';
 const PILOT_STATS = [
   { label: 'Units', value: '270' },
   { label: 'Built area', value: '~32K sqm' },
-  { label: 'Opening', value: 'Q2 2027' },
+  { label: 'Opening', value: 'Summer 2027' },
   { label: 'Location', value: 'Hurghada, Egypt' },
 ];
 

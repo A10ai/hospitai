@@ -87,14 +87,14 @@ export const PILOT_FACTS = {
   area: '~32,000 sqm',
   location: 'Kawthar District, Hurghada, Egypt',
   floors: 'Ground + 4 floors + rooftop',
-  opening: 'Q2 2027',
+  opening: 'Summer 2027',
 };
 
 export const PILOT_TIMELINE = [
   { date: 'April 2026', title: 'Structure Complete', description: 'Building envelope sealed. Ready for internal works.' },
   { date: 'Apr – Sep 2026', title: 'MEP & Smart Infrastructure', description: 'Smart infrastructure backbone installed throughout.' },
   { date: 'Dec 2026 – Mar 2027', title: 'AI Systems Integration', description: 'Sensors, automation, and intelligence layer brought online.' },
-  { date: 'Q2 2027', title: 'Soft Launch', description: 'Full AI integration from day one.' },
+  { date: 'Summer 2027', title: 'Soft Launch', description: 'Full AI integration from day one.' },
   { date: '2027 – 2029', title: 'Performance Validation', description: 'Data collection, model refinement, benchmark measurement.' },
 ];
 
@@ -116,7 +116,7 @@ export const TESTBED_REASONS = [
 export const COMPANY_FACTS = [
   { label: 'Registered in', value: 'United Kingdom' },
   { label: 'IP', value: 'UK-developed' },
-  { label: 'First pilot', value: '270 units, Egypt, Q2 2027' },
+  { label: 'First pilot', value: '270 units, Egypt, Summer 2027' },
   { label: 'Sector', value: 'Hospitality AI / PropTech' },
   { label: 'Stage', value: 'Pre-revenue, development' },
 ];
@@ -130,8 +130,9 @@ export const ROLE_CATEGORIES = [
 ];
 
 export const WHAT_WE_OFFER = [
-  'Equity participation',
+  'Competitive salary + equity participation',
   'UK-based, flexible/remote',
   'Real deployment environment',
   'Direct impact on a $220B market',
+  'Join at the ground floor of a funded AI company',
 ];

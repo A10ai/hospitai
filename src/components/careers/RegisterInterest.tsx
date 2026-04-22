@@ -16,7 +16,7 @@ export default function RegisterInterest() {
     const body = encodeURIComponent(
       `Name: ${name}\nEmail: ${email}\nLinkedIn: ${linkedin}\n\n${note}`
     );
-    window.location.href = `mailto:hello@hospitai.co.uk?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:hello@hospitai.uk?subject=${subject}&body=${body}`;
     setSubmitted(true);
   };
 

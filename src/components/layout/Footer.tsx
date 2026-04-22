@@ -32,10 +32,10 @@ export default function Footer() {
 
         <div className="mt-12 pt-8 border-t border-navy-700/30 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-slate-500 text-xs">
-            &copy; {new Date().getFullYear()} HospitAI. All rights reserved.
+            &copy; {new Date().getFullYear()} HospitAI Ltd (Company No. 17129584). All rights reserved.
           </p>
           <p className="text-slate-600 text-xs">
-            hello@hospitai.co.uk
+            hello@hospitai.uk
           </p>
         </div>
       </div>
